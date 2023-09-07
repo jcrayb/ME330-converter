@@ -3,11 +3,13 @@ from txt_to_csv import convert_txt_to_csv
 
 app = Flask(__name__)
 
-
-
 @app.route('/')
 def main():
     return render_template('app.html')
+
+@app.route('/healthcheck')
+def healthcheck():
+    return {'status':'healthy'}
 
 @app.route('/convert', methods=['POST'])
 def route_convert():
