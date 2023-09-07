@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, send_from_directory
-from txt_to_csv import convert_txt_to_csv 
-import pandas as pd
+from txt_to_csv import convert_txt_to_csv
 
 app = Flask(__name__)
 
