@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, send_from_directory, abort
 from txt_to_csv import convert_txt_to_csv
 import requests
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 
@@ -20,7 +21,11 @@ def route_convert(type_):
         return abort(400)
     data = request.get_json()
     if type_ == 'url':
-        text = requests.get(data['url']).content.decode('utf-8')
+        url = data['url']
+        site = urlparse(url).hostname
+        if site != 'mtil.illinois.edu':
+            return abort(400)
+        text = requests.get(url).content.decode('utf-8')
     elif type_ == 'text':
         text = data['text']    
     else:
