@@ -1,10 +1,10 @@
 import pandas as pd
 
 def convert_txt_to_csv(text):
-    text = text.replace('*\n', '')
-    text = text.split(' ')
+    new_text = text.replace('*\n', '')
+    text = new_text.split(' ')
+    text[0] = text[0].replace('*\r', '')
     data_list1 = [e.split('\t') for e in text]
-
     data_list2 = []
 
     for e in data_list1:
