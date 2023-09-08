@@ -8,6 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <title>Document</title>
     <script>
+        index = 1
+
         function convert_from_textbox(){
             text = document.getElementById('main-textarea').value;
             if (text===''){
@@ -29,9 +31,17 @@
         };
 
         function convert_from_url(){
-            url = document.getElementById('main-urlbox').value;
-            if (url===''){
-                document.getElementById('err-msg').innerHTML = 'Your text field is blank.'
+            var url_boxes = document.getElementsByName('urlbox');
+            var urls = []
+            console.log(url_boxes)
+            url_boxes.forEach(element=>{
+                if (element.value !== ''){
+                    urls.push(element.value);
+                }
+            })
+            console.log(urls)
+            if (urls.length == 0){
+                document.getElementById('err-msg').innerHTML = 'Please add at least one link.'
                 return
             }
             fetch('/convert/url', {
@@ -39,14 +49,34 @@
                 headers:{
                     'Content-Type':'application/json'
                 },
-                body: JSON.stringify({url})
+                body: JSON.stringify({urls})
             })
             .then(response => response.blob())
             .then(data=>{
                 document.getElementById('err-msg').innerHTML = ''
                 saveAs(data, 'data.csv')
-            });
+            })
         };
+
+        function add_url_box(){
+            var urlbox_container = document.getElementById('urlbox-container');
+            var new_box = document.createElement('div');
+            new_box.setAttribute('class', 'urlbox-wrapper mb-2 row w-100 gx-1');
+            new_box.setAttribute('id', `urlbox-${index}`);
+            new_box.innerHTML = `
+                <div class="px-1 col-sm-11" >
+                    <input type="text" name="urlbox" class="w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">
+                </div>
+                <div class="px-1 col-sm-1">
+                    <button onclick="remove_url_box(${index})" class="btn btn-outline-dark w-100">X</button>
+                </div>`;
+            urlbox_container.append(new_box)
+            index += 1
+        }
+
+        function remove_url_box(index){
+            document.getElementById(`urlbox-${index}`).remove();
+        }
     </script>
 
     <style>
@@ -70,7 +100,17 @@
           <div class="tab-content" id="tab-content">
             <!-- URL tab-->
             <div class="tab-pane fade show active" id="url-tab-pane" role="tabpanel" aria-labelledby="url-tab" tabindex="0">
-                <input type="text" name="urlbox" id="main-urlbox" class="w-100 mb-3" placeholder="Paste the link here...">
+                <div id="urlbox-container" class="w-100 mb-3">
+                    <div class="urlbox-wrapper mb-2 row w-100 gx-1" id="urlbox-0">
+                        <div class="px-1 col-sm-11" >
+                            <input type="text"  name="urlbox" class="w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">
+                        </div>
+                        <div class="px-1 col-sm-1">
+                            <button onclick="remove_url_box(0)" class="btn btn-outline-dark w-100">X</button>
+                        </div>
+                    </div>
+                </div>
+                <a onclick="add_url_box()">+ add another link...</a><br>
                 <button onclick="convert_from_url()" class="btn btn-outline-dark">Convert</button>
             </div>
 
@@ -88,7 +128,7 @@
         <p>This website works for .txt data files only (.csv files are already excel files) directly from the ME330 lab data website available <a href="https://mtil.illinois.edu/data/Courses/Fall%202023/ME330/">here</a>.</p>
         <h5>Example:</h5>
         <div class="d-flex align-content-center justify-content-center">
-            <img src="static/img/img_1.png" alt="Example of compatible files">
+            <img src="static/img/img_1.png" alt="Example of compatible files" class="w-100" style="max-width:500px">
         </div>
         <p class="mt-2">Click on the link to access a similar looking page. </p>
         <div class="d-flex align-content-center justify-content-center">
@@ -99,7 +139,7 @@
         <div class="d-flex align-content-center justify-content-center">
             <img src="static/img/url_method.png" alt="Illustration of copied link" class="w-100">
         </div>
-        <p>Copy the link from the search box, and paste it into the box below the "Link method" option.</p>
+        <p>Copy the link from the search box, and paste it into the box below the "Link method" option. Click "add another link" to combine multiple tables into a single excel file.</p>
         
         <p>Click on the convert button, and your file should download automatically.</p>
         

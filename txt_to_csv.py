@@ -1,4 +1,5 @@
 import pandas as pd
+import io
 
 def convert_txt_to_csv(text):
     new_text = text.replace('*\n', '')
@@ -28,4 +29,4 @@ def convert_txt_to_csv(text):
     df = pd.DataFrame(data=data_dict).transpose()
     df.columns = df.iloc[0]
     df = df.drop(0)
-    return df.to_csv('temp/temp.csv')
+    return df.to_csv()

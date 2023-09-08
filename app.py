@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, send_from_directory, abort
 from txt_to_csv import convert_txt_to_csv
 import requests
 from urllib.parse import urlparse
+import io
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -21,16 +23,27 @@ def route_convert(type_):
         return abort(400)
     data = request.get_json()
     if type_ == 'url':
-        url = data['url']
-        site = urlparse(url).hostname
-        if site != 'mtil.illinois.edu':
-            return abort(400)
-        text = requests.get(url).content.decode('utf-8')
+        csv_string = ''
+        urls = data['urls']
+        for url in urls:
+            site = urlparse(url).hostname
+            if site != 'mtil.illinois.edu':
+                return abort(400)
+            text = requests.get(url).content.decode('utf-8')
+            csv = convert_txt_to_csv(text)
+            if csv_string:
+                csv = csv.replace(csv.split('\n')[0], '')
+            csv_string += csv
+        df = pd.read_csv(io.StringIO(csv_string))
+        print(df.columns)
+        if 'Unnamed: 0' in df.columns:
+            df = df.drop('Unnamed: 0', axis=1)
+        df.to_csv('temp/temp.csv')
     elif type_ == 'text':
         text = data['text']    
     else:
         return abort(400)
-    csv = convert_txt_to_csv(text)
+    
     return send_from_directory('temp', 'temp.csv')
 
 
