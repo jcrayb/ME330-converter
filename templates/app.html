@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tired of manually having to input your ME 330 lab data into Excel? Use our tool to automatically download a spreadsheet of multiple section's data files, all in one click.">
+    <meta name="keywords" content="University, Illinois, UIUC, ME330, ME 330, Lab, Data, ME, 330, me, Me, Mechanical, Engineering, Grainger">
+    <meta name="author" content="Chris Raymond-Bertrand">
+    <title>ME330 Lab Data Converter</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <title>Document</title>
+
     <script>
         index = 1
 
@@ -62,7 +67,6 @@
             var urlbox_container = document.getElementById('urlbox-container');
             var new_box = document.createElement('div');
             new_box.setAttribute('class', 'urlbox-wrapper mb-2 row w-100 gx-1');
-            new_box.setAttribute('id', `urlbox-${index}`);
             new_box.innerHTML = `
                 <div class="px-1 col-sm-11" >
                     <input type="text" name="urlbox" class="w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">

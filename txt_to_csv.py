@@ -1,5 +1,4 @@
 import pandas as pd
-import io
 
 def convert_txt_to_csv(text):
     new_text = text.replace('*\n', '')

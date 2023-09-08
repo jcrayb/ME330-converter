@@ -18,7 +18,6 @@ def healthcheck():
 @app.route('/convert', defaults={'type':''})
 @app.route('/convert/<type_>', methods=['POST'])
 def route_convert(type_):
-    
     if not type_:
         return abort(400)
     data = request.get_json()
@@ -35,7 +34,6 @@ def route_convert(type_):
                 csv = csv.replace(csv.split('\n')[0], '')
             csv_string += csv
         df = pd.read_csv(io.StringIO(csv_string))
-        print(df.columns)
         if 'Unnamed: 0' in df.columns:
             df = df.drop('Unnamed: 0', axis=1)
         df.to_csv('temp/temp.csv')
@@ -43,7 +41,6 @@ def route_convert(type_):
         text = data['text']    
     else:
         return abort(400)
-    
     return send_from_directory('temp', 'temp.csv')
 
 
