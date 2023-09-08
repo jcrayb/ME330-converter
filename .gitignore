@@ -1,2 +1,13 @@
 __pycache__
-temp
+#custom
+.env
+cert
+conf
+lib
+lib64
+include
+bin
+pyvenv.cfg
+.gitignore
+.gitattributes
+.github
