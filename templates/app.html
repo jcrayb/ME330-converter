@@ -70,7 +70,7 @@
             new_box.setAttribute('id', `urlbox-${index}`)
             new_box.innerHTML = `
                 <div class="px-1 col-sm-11" >
-                    <input type="text" name="urlbox" class="w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">
+                    <input type="text" name="urlbox" class="px-2 w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">
                 </div>
                 <div class="px-1 col-sm-1">
                     <button onclick="remove_url_box(${index})" class="btn btn-outline-dark w-100">X</button>
@@ -108,7 +108,7 @@
                 <div id="urlbox-container" class="w-100 mb-3">
                     <div class="urlbox-wrapper mb-2 row w-100 gx-1" id="urlbox-0">
                         <div class="px-1 col-sm-11" >
-                            <input type="text"  name="urlbox" class="w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">
+                            <input type="text"  name="urlbox" class=" px-2w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">
                         </div>
                         <div class="px-1 col-sm-1">
                             <button onclick="remove_url_box(0)" class="btn btn-outline-dark w-100">X</button>
@@ -121,7 +121,7 @@
 
             <!-- TEXT tab -->
             <div class="tab-pane fade" id="text-tab-pane" role="tabpanel" aria-labelledby="text-tab" tabindex="0">
-                <textarea name="textarea" id="main-textarea" class="w-100 mb-3" placeholder="Paste the text data here..."></textarea>
+                <textarea name="textarea" id="main-textarea" class="px-2 w-100 mb-3" placeholder="Paste the text data here..."></textarea>
                 <button onclick="convert_from_textbox()" class="btn btn-outline-dark">Convert</button>
             </div>
           </div>
