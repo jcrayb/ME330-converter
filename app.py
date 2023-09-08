@@ -33,14 +33,15 @@ def route_convert(type_):
             if csv_string:
                 csv = csv.replace(csv.split('\n')[0], '')
             csv_string += csv
-        df = pd.read_csv(io.StringIO(csv_string))
-        if 'Unnamed: 0' in df.columns:
-            df = df.drop('Unnamed: 0', axis=1)
-        df.to_csv('temp/temp.csv')
     elif type_ == 'text':
-        text = data['text']    
+        text = data['text']
+        csv_string = convert_txt_to_csv(text)
     else:
         return abort(400)
+    df = pd.read_csv(io.StringIO(csv_string))
+    if 'Unnamed: 0' in df.columns:
+        df = df.drop('Unnamed: 0', axis=1)
+    df.to_csv('temp/temp.csv')
     return send_from_directory('temp', 'temp.csv')
 
 
