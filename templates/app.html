@@ -67,6 +67,7 @@
             var urlbox_container = document.getElementById('urlbox-container');
             var new_box = document.createElement('div');
             new_box.setAttribute('class', 'urlbox-wrapper mb-2 row w-100 gx-1');
+            new_box.setAttribute('id', `urlbox-${index}`)
             new_box.innerHTML = `
                 <div class="px-1 col-sm-11" >
                     <input type="text" name="urlbox" class="w-100 h-100 mb-2 mb-sm-0" placeholder="Paste the link here...">
