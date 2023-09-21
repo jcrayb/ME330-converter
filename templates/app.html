@@ -19,35 +19,66 @@
     </style>
 
     <script>
+        function modal(){
+          fetch('./static/config/modal.json')
+          .then(response => response.json())
+          .then(data =>{
+            
+            console.log(data)
+            title = data['title'];
+            body = data['body'];
+            cookie_id = data['id'];
+
+            if(title===undefined){
+              console.log('no file')
+              return
+            }
+
+            title_element = document.getElementById('modal-title');
+            body_element =  document.getElementById('modal-body');
+
+            title_element.innerHTML = title;
+            body_element.innerHTML = body;
+
+            closing_elements = document.getElementsByClassName('modal-dismiss');
+            console.log(closing_elements);
+            Array.from(closing_elements).forEach((element) => {
+              element.setAttribute('onclick', `set_visited("${cookie_id}")`);
+            });
+
+            toggle_modal(cookie_id)
+          }
+          )
+        }
         function toggle_modal(){
-            visited = localStorage.getItem('visited')
+            visited = localStorage.getItem(cookie_id)
             
             if(visited != 'true'){
-                
-                modalElement = document.getElementById('staticBackdrop')
+                modalElement = document.getElementById('modal')
                 const modal = new bootstrap.Modal(modalElement); 
                 modal.show(); 
         }};
-        function set_visited(){
-            localStorage.setItem('visited', true)
+
+        function set_visited(cookie_id){
+            localStorage.setItem(cookie_id, true)
         }
     </script>
 </head>
-<body onload="toggle_modal()">
+<body onload="modal()">
     <div class="container pt-4">
         <!-- ERROR MESSAGE -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+        <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Message for Lab 3</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="set_visited()"></button>
+                  <h1 class="modal-title fs-5" id="modal-title"></h1>
+                  <button type="button" class="btn-close modal-dismiss" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                  Lab 3 doesn't require any data to be combined, and due to the formatting of the data provided being different than previous labs, you will receive an error if links to lab 3 data are provided.
+                <div class="modal-body" id="modal-body">
+                  <!-- Lab 3 doesn't require any data to be combined, and due to the formatting of the data provided being different than previous labs, you will receive an error if links to lab 3 data are provided. -->
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="set_visited()">Close</button>
+                  <button type="button" class="btn btn-secondary modal-dismiss" data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
