@@ -17,9 +17,42 @@
             min-height: 500px;
         }
     </style>
+
+    <script>
+        function toggle_modal(){
+            visited = localStorage.getItem('visited')
+            
+            if(visited != 'true'){
+                
+                modalElement = document.getElementById('staticBackdrop')
+                const modal = new bootstrap.Modal(modalElement); 
+                modal.show(); 
+        }};
+        function set_visited(){
+            localStorage.setItem('visited', true)
+        }
+    </script>
 </head>
-<body>
+<body onload="toggle_modal()">
     <div class="container pt-4">
+        <!-- ERROR MESSAGE -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Message for Lab 3</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="set_visited()"></button>
+                </div>
+                <div class="modal-body">
+                  Lab 3 doesn't require any data to be combined, and due to the formatting of the data provided being different than previous labs, you will receive an error if links to lab 3 data are provided.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="set_visited()">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
         <h1 class="text-center">ME 330 Text data to Excel file</h1>
         <p>Please consult the "How to use" section to learn about the different methods available.</p>
         <ul class="nav nav-tabs mb-3" id="tab" role="tablist">
