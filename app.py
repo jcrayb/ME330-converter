@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, send_from_directory, abort
-from txt_to_csv import convert_txt_to_csv
+
+from txt_to_csv_lab4 import convert_txt_to_csv_4
+from txt_to_csv_lab1 import convert_txt_to_csv_1
+
 import requests
 from urllib.parse import urlparse
 import io
@@ -22,6 +25,8 @@ def route_convert(type_):
     if not type_:
         return abort(400)
     data = request.get_json()
+    lab = request.args['lab']
+    print(lab)
     if type_ == 'url':
         csv_string = ''
         urls = data['urls']
@@ -29,8 +34,16 @@ def route_convert(type_):
             site = urlparse(url).hostname
             if site != 'mtil.illinois.edu':
                 return abort(400)
-            text = requests.get(url).content.decode('utf-8')
-            csv = convert_txt_to_csv(text)
+            request_obj = requests.get(url)
+            encoding = request_obj.apparent_encoding
+            text = str(request_obj.content, encoding="utf-8").replace(str('\r'), str('\n'))
+            #print(text)
+            if lab=='lab1':
+                csv = convert_txt_to_csv_1(text)
+
+            if lab=='lab4':
+                csv = convert_txt_to_csv_4(text)
+
             if csv_string:
                 csv = csv.replace(csv.split('\n')[0], '')
             csv_string += csv

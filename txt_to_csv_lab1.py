@@ -1,6 +1,6 @@
 import pandas as pd
 
-def convert_txt_to_csv(text):
+def convert_txt_to_csv_1(text):
     new_text = text.replace('*\n', '')
     text = new_text.split(' ')
     text[0] = text[0].replace('*\r', '')
